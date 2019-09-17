@@ -27,6 +27,7 @@ input{
 .register-form{
     background-color: white;
     padding: 50px;
+   
 }
 
 .form-header{
@@ -57,6 +58,11 @@ input{
 .form-footer {
     display: flex;
     justify-content: space-between;
+    
+}
+
+.form-footer button{
+    margin-right: 4px;
 }
 
 a {
@@ -79,7 +85,11 @@ button {
     color: white;
     border-radius: 5px;
     line-height: 3px;
-    text-align: center;
+    
+}
+
+.password-wrapper .input-wrapper{
+    margin-bottom: 5px;
 }
 
 button:hover {
