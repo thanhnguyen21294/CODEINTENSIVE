@@ -55,6 +55,7 @@ input{
     width: calc(50% - 5px);
 }
 
+
 .form-footer {
     display: flex;
     justify-content: space-between;
@@ -121,3 +122,7 @@ button:hover {
     text-align: center;
 }
 
+
+.login-content .login-wrapper {
+    margin-bottom: 5px;
+}
