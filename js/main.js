@@ -1,7 +1,8 @@
 window.onload = init;
 
 function init(){
-    let inputDom = document.getElementsByTagName('input')
+    let inputId = document.getElementById('login-container')
+    let inputDom = inputId.getElementsByTagName('input');
     inputDom.style.background = 'red';
     }
 
