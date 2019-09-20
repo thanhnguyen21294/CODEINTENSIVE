@@ -98,32 +98,8 @@ button:hover {
     cursor: pointer;
 }
 
-/* .login-container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    background: url(../img/login-background.jpg) center center no-repeat;
-    background-size: cover;
+
+.message-error {
+    line-height: 25px;
+    color: red;
 }
-
-.login-header h3{
-    font-size: 32px;
-    color: #788194;
-    text-align: center;
-}
-
-.login-form {
-    margin: auto;
-    width: 30%;
-    height: 35%;
-    border: 1px solid black;
-    padding: 10px;
-    background-color: white;
-    text-align: center;
-}
-
-
-.login-content .login-wrapper {
-    margin-bottom: 5px;
-} */

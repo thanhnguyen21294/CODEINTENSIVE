@@ -1,7 +1,7 @@
 const component = {}
 component.register = `
 <section class="register-container">
-        <form class="register-form">
+        <form id="register-form" class="register-form">
             <div class="form-header">
                 <h3>MindX Chat</h3>
             </div>
@@ -9,23 +9,30 @@ component.register = `
                 <div class="name-wrapper">
                     <div class="input-wrapper">
                         <input id="input-firstname" type="text" name="firstname" placeholder="Firstname">
+                        <div id="firstname-error" class="message-error"></div>
                     </div>
+                    
                     <div class="input-wrapper">
                         <input id="input-lastname" type="text" name="lastname" placeholder="Lastname">
+                        <div id="lastname-error" class="message-error"></div>
                     </div>
+                    
                 </div>
                 <div class="email-wrapper">
                     <div class="input-wrapper">
                         <input id="input-email" type="text" name="email" placeholder="Email">
                     </div>
+                    <div id="email-error" class="message-error"></div>
                 </div>
                 <div class="password-wrapper">
                     <div class="input-wrapper">
                         <input id="input-password" type="password" name="password" placeholder="Password">
                     </div>
+                    <div id="password-error" class="message-error"></div>
                     <div class="input-wrapper">
                         <input id="input-repassword" type="password" name="confirmPassword" placeholder="Confirm Password">
                     </div>
+                    <div id="repassword-error" class="message-error"></div>
                 </div>
 
             </div>
