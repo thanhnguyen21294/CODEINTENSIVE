@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="../css/main.css">
-    <script src="../js/main.js"></script>
-</head>
-
-<body>
-    <section class="register-container">
+const component = {}
+component.register = `
+<section class="register-container">
         <form class="register-form">
             <div class="form-header">
                 <h3>MindX Chat</h3>
@@ -42,11 +30,39 @@
 
             </div>
             <div class="form-footer">
-                <a href="../js/login.html" target="_blank">Already have an account? Login.</a>
+                <a id="register-link">Already have an account? Login.</a>
                 <button type="submit">Register</button>
             </div>
         </form>
     </section>
-</body>
+    `
 
-</html>
+    component.login = `
+    <section class="login-container">
+        <form id="login-container" class="login-form">
+            <div class="login-header">
+                <h3>MindX Login</h3>
+            </div>
+            <div class="form-content">
+                <div class="email-wrapper">
+                    <div class="input-wrapper">
+                        <input id="input-email" type="text" name="email" placeholder="Email">
+                    </div>
+                </div>
+                <div class="password-wrapper">
+                    <div class="input-wrapper">
+                        <input id="input-password" type="password" name="password" placeholder="Password">
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="login-footer">
+                <a id="login-link">Not yet have an account? Register.</a>
+                <button type="submit">Login</button>
+            </div>
+        </form>
+    </section>
+</body>
+`
