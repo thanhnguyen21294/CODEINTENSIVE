@@ -1,21 +1,22 @@
 const view = {}
 
+
 const validators = {
-    require(str){
+    require(str) {
         return str
     },
-    email(str){
+    email(str) {
         return str.includes('@')
     },
-    password(str){
-        return str.length > 6
+    password(str) {
+        return str.length >= 6
     }
 }
 
-view.showComponent = function(name){
+view.showComponent = function (name) {
     let app = document.getElementById('app');
-    switch (name){
-        case `register`:{
+    switch (name) {
+        case `register`: {
             app.innerHTML = component.register
             let link = document.getElementById('register-link');
             link.onclick = linkClickHandler;
@@ -23,11 +24,11 @@ view.showComponent = function(name){
             let form = document.getElementById('register-form')
             form.onsubmit = formSubmitHandler
 
-            function linkClickHandler(){
+            function linkClickHandler() {
                 view.showComponent('login')
             }
 
-            function formSubmitHandler(event){
+            function formSubmitHandler(event) {
                 event.preventDefault()
                 let registerInfo = {
                     firstname: form.firstname.value,
@@ -36,66 +37,83 @@ view.showComponent = function(name){
                     password: form.password.value,
                     confirmPassword: form.confirmPassword.value
                 }
-                // if (registerInfo.firstname) {
-                //     document.getElementById('firstname-error').innerHTML = ''
-                    
-                // }else{
-                //     document.getElementById('firstname-error').innerHTML = 'Invalid firstname!'
-                // }
-                view.validate(registerInfo.firstname, validators.require, 'firstname-error', 'Invalid firstname')
 
-                // if (registerInfo.lastname) {
-                //     document.getElementById('lastname-error').innerHTML = ''
-                // }else{
-                //     document.getElementById('lastname-error').innerHTML = 'Invalid lastname!'
-                // }
-                view.validate(registerInfo.lastname, validators.require, 'lastname-error', 'Invalid lastname')
+                let validateResult = [
 
-                if (!((registerInfo.email).includes('@'))) {
-                    document.getElementById('email-error').innerHTML = 'Invalid email!'
-                }else{
-                    document.getElementById('email-error').innerHTML = ''
+                    view.validate(registerInfo.firstname, validators.require, 'firstname-error', 'Invalid firstname'),
+
+
+                    view.validate(registerInfo.lastname, validators.require, 'lastname-error', 'Invalid lastname'),
+                    view.validate(registerInfo.email, validators.email, 'email-error', 'Invalid email!'),
+                    view.validate(registerInfo.password, validators.password, 'password-error', 'Invalid password!'),
+                    view.validate(registerInfo.confirmPassword, function (str) {
+                        return str === registerInfo.password
+                    }, 'repassword-error', 'Invalid confirm password')
+                ]
+                if (allPassed(validateResult)) {
+                    controller.register(registerInfo)
                 }
-
-                if ((registerInfo.password).length < 6) {
-                    document.getElementById('password-error').innerHTML = 'Password must have more than 6 characters'
-                }else{
-                    document.getElementById('password-error').innerHTML = ''
-                }
-
-                if (registerInfo.confirmPassword === registerInfo.password) {
-                    document.getElementById('repassword-error').innerHTML = ''
-                }else{
-                    document.getElementById('repassword-error').innerHTML = 'Enter password again!'
-                }
+                console.log(validateResult);
                 
             }
+            
+
             break
         }
-    
-        case `login`:{
+
+        case `login`: {
             app.innerHTML = component.login
             let link = document.getElementById('login-link');
             link.onclick = linkClickHandler;
-            function linkClickHandler(){
+            function linkClickHandler() {
                 view.showComponent('register')
+
+            }
+            let form = document.getElementById('login-container')
+            form.onsubmit = formSubmitHandler
+
+            function formSubmitHandler(event) {
+                event.preventDefault();
+                let loginInfo = {
+                    email: form.email.value,
+                    password: form.password.value
+                }
+                let validateResult = [
+                view.validate(loginInfo.email, validators.email, 'email-error', 'Invalid email'),
+                view.validate(loginInfo.password, validators.password, 'password-error', 'Invalid password')
+                ]
+                if (allPassed(validateResult)) {
+                    controller.login(loginInfo)
+                }
+            }
+            
+            
+                
+            break
+        }
+        function allPassed(validateResult){
+            for (let result of validateResult) {
+                if (!result) {
+                    return false
+                }
                 
             }
-            break
+            return true
         }
     }
 }
 
-view.setText = function(id, text){
+view.setText = function (id, text) {
     document.getElementById(id).innerHTML = text
 }
 
-view.validate = function(value, validators, idErrorMessage, errorMessage){
+view.validate = function (value, validators, idErrorMessage, errorMessage) {
     if (validators(value)) {
-        view.setText(idErrorMessage,'')
+        view.setText(idErrorMessage, '')
         return true
-    }else{
+    } else {
         view.setText(idErrorMessage, errorMessage)
         return false
     }
 }
+

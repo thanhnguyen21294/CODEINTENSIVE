@@ -70,3 +70,12 @@ button:hover {
     padding: 10px;
     color: red;
 }
+
+.message-success {
+    line-height: 25px;
+    color:#00ff00;
+}
+
+button :disabled{
+    background: #ffffff;
+}

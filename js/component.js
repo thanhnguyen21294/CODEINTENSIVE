@@ -36,9 +36,11 @@ component.register = `
                 </div>
 
             </div>
+            <div id="register-error" class="message-error"></div>
+            <div id="register-success" class="message-success"></div>
             <div class="form-footer">
                 <a id="register-link">Already have an account? Login.</a>
-                <button type="submit">Register</button>
+                <button type="submit" id="register-submit-btn">Register</button>
             </div>
         </form>
     </section>
@@ -54,20 +56,24 @@ component.register = `
                 <div class="email-wrapper">
                     <div class="input-wrapper">
                         <input id="input-email" type="text" name="email" placeholder="Email">
+                        <div id='email-error' class="message-error"></div>
                     </div>
                 </div>
                 <div class="password-wrapper">
                     <div class="input-wrapper">
                         <input id="input-password" type="password" name="password" placeholder="Password">
+                        <div id='password-error' class="message-error"></div>
                     </div>
 
                 </div>
             </div>
+            <div id="login-error" class="message-error"></div>
+            
 
 
             <div class="login-footer">
                 <a id="login-link">Not yet have an account? Register.</a>
-                <button type="submit">Login</button>
+                <button type="submit" id="login-submit-btn">Login</button>
             </div>
         </form>
     </section>
