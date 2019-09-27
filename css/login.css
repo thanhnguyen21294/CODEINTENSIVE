@@ -79,3 +79,10 @@ button:hover {
 button :disabled{
     background: #ffffff;
 }
+
+.loading-container {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

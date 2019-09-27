@@ -1,5 +1,18 @@
 const controller = {}
 
+controller.initAuth = function(){
+    view.showComponent('loading')
+    firebase.auth().onAuthStateChanged(onAuthStateChangedHandler)
+
+    function onAuthStateChangedHandler(user){
+        if (user && user.emailVerified) {
+            view.showComponent('chat')
+        }else{
+            view.showComponent('login')
+        }
+    }
+}
+
 
 controller.register = async function (registerInfo) {
     let email = registerInfo.email;
@@ -32,10 +45,14 @@ controller.login = async function (logInInfo) {
 
     try {
         let result = await firebase.auth().signInWithEmailAndPassword(email, password)
-        if (result.user && result.user.emailVerified) {
-            alert('Login success')
-        } else {
-            throw Error("You must verified your email!")
+        
+        // if (result.user && result.user.emailVerified) {
+        //     view.showComponent('chat');
+        // } else {
+        //     throw Error("You must verified your email!")
+        // }
+        if (!result.user.emailVerified || !result.user) {
+            throw new Error('You must verified your email !')
         }
 
     } catch (error) {

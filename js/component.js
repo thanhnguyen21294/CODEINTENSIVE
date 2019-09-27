@@ -1,5 +1,6 @@
 const component = {}
 component.register = `
+
 <section class="register-container">
         <form id="register-form" class="register-form">
             <div class="form-header">
@@ -77,5 +78,45 @@ component.register = `
             </div>
         </form>
     </section>
-</body>
-`
+
+    `
+    component.chat = `
+    <section class="chat-container">
+    <div class="current-conversation">
+      <div class="message-container">
+        <div class="message-chat">
+          <span>Hello</span>
+        </div>
+        <div class="message-chat your">
+          <span>Hello2</span>
+        </div>
+        <div class="message-chat">
+          <span>Hello3</span>
+        </div>
+      </div>
+      <form class="form-chat">
+        <div class="input-wrapper">
+          <input type="text" name="message" placeholder="Enter your message">
+        </div>
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  </section>
+    `
+
+    component.loading = `
+    <div class = 'loading-container'> 
+    <img src="../img/loading.jpg">
+    </div>`
+
+
+    component.nav = `
+    <nav class="main-nav">
+    <div class="user-profile">
+      <span class="user-display-name" id="user-display-name"></span>
+      <button class="btn-icon" id="btn-sign-out"><i class="fas fa-sign-out-alt"></i></button>
+    </div>
+  </nav>
+  `
+
+    

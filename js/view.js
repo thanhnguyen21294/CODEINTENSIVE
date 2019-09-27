@@ -100,6 +100,25 @@ view.showComponent = function (name) {
             }
             return true
         }
+
+        case 'chat' : {
+            app.innerHTML = component.nav + component.chat
+            let nameDom = document.getElementById('user-display-name')
+            nameDom.innerText = firebase.auth().currentUser.displayName;
+
+            let btnSignOut = document.getElementById('btn-sign-out')
+            btnSignOut.onclick = signOutHandler
+
+            function signOutHandler(){
+                firebase.auth().signOut() // onAuthStateChange => show login
+            }
+            break
+        }
+
+        case 'loading' : {
+            app.innerHTML = component.loading
+            break
+        }
     }
 }
 
