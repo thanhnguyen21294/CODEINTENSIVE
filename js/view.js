@@ -104,6 +104,7 @@ view.showComponent = function (name) {
         case 'chat': {
             app.innerHTML = component.nav + component.chat
             controller.loadConversations()
+            controller.setupConversationsOnSnapshot()
             let nameDom = document.getElementById('user-display-name')
             nameDom.innerText = firebase.auth().currentUser.displayName;
 
@@ -171,6 +172,7 @@ view.showCurrentConversation = function () {
         // show all message of currentConversation
         let messages = model.currentConversation.messages
         let messageContainer = document.getElementById('message-container')
+        messageContainer.innerHTML = ""
         for (let message of messages) {
             let className = "message-chat"
             let content = message.content

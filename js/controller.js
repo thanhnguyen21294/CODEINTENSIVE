@@ -78,8 +78,8 @@ controller.loadConversations = async function () {
 
 
     }
-    
-    
+
+
     model.saveConversations(conversations)
     if (conversations.length) {
         model.saveCurrentConversation(conversations[0])
@@ -88,18 +88,42 @@ controller.loadConversations = async function () {
 }
 
 
-controller.addMessage = async function(message){
-    
+controller.addMessage = async function (message) {
+
     let input = document.getElementById('form-chat-input')
     view.disable('form-chat-submit-btn')
 
     await firebase
-    .firestore()
-    .collection('conversations')
-    .doc(model.currentConversation.id)
-    .update({
-        messages: firebase.firestore.FieldValue.arrayUnion(message)
-    })
+        .firestore()
+        .collection('conversations')
+        .doc(model.currentConversation.id)
+        .update({
+            messages: firebase.firestore.FieldValue.arrayUnion(message)
+        })
     view.enable('form-chat-submit-btn')
     input.value = ''
+}
+
+controller.setupConversationsOnSnapshot = function () {
+    firebase
+        .firestore()
+        .collection('conversations')
+        .onSnapshot(snapshotHandler)
+
+    function snapshotHandler(snapshot){
+        let docChanges = snapshot.docChanges()
+        for (let docChange of docChanges) {
+            let conversation = docChange.doc.data()
+            conversation.id = docChange.doc.id
+            if (docChange.type = 'modified') {
+                if (conversation.id == model.currentConversation.id) {
+                    model.saveCurrentConversation(conversation)
+                    view.showCurrentConversation()
+                }
+            }
+            
+        }
+        
+        
+    }
 }
