@@ -186,7 +186,7 @@ view.showCurrentConversation = function () {
             `
             messageContainer.innerHTML += html
         }
-
+        messageContainer.scrollTop = messageContainer.scrollHeight
 
     }
 }

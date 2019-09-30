@@ -69,6 +69,7 @@ controller.loadConversations = async function () {
     let result = await firebase
         .firestore()
         .collection('conversations')
+        .where('users', 'array-contains', firebase.auth().currentUser.email)
         .get()
     let conversations = []
     for (let doc of result.docs) {
@@ -108,9 +109,10 @@ controller.setupConversationsOnSnapshot = function () {
     firebase
         .firestore()
         .collection('conversations')
+        .where('users', 'array-contains', firebase.auth().currentUser.email)
         .onSnapshot(snapshotHandler)
 
-    function snapshotHandler(snapshot){
+    function snapshotHandler(snapshot) {
         let docChanges = snapshot.docChanges()
         for (let docChange of docChanges) {
             let conversation = docChange.doc.data()
@@ -121,9 +123,9 @@ controller.setupConversationsOnSnapshot = function () {
                     view.showCurrentConversation()
                 }
             }
-            
+
         }
-        
-        
+
+
     }
 }
