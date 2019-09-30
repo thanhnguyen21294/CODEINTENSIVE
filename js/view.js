@@ -54,9 +54,9 @@ view.showComponent = function (name) {
                     controller.register(registerInfo)
                 }
                 console.log(validateResult);
-                
+
             }
-            
+
 
             break
         }
@@ -79,43 +79,62 @@ view.showComponent = function (name) {
                     password: form.password.value
                 }
                 let validateResult = [
-                view.validate(loginInfo.email, validators.email, 'email-error', 'Invalid email'),
-                view.validate(loginInfo.password, validators.password, 'password-error', 'Invalid password')
+                    view.validate(loginInfo.email, validators.email, 'email-error', 'Invalid email'),
+                    view.validate(loginInfo.password, validators.password, 'password-error', 'Invalid password')
                 ]
                 if (allPassed(validateResult)) {
                     controller.login(loginInfo)
                 }
             }
-            
-            
-                
+
+
+
             break
         }
-        function allPassed(validateResult){
-            for (let result of validateResult) {
-                if (!result) {
-                    return false
-                }
-                
-            }
-            return true
-        }
+            function allPassed(validateResult) {
+                for (let result of validateResult) {
+                    if (!result) {
+                        return false
+                    }
 
-        case 'chat' : {
+                }
+                return true
+            }
+
+        case 'chat': {
             app.innerHTML = component.nav + component.chat
+            controller.loadConversations()
             let nameDom = document.getElementById('user-display-name')
             nameDom.innerText = firebase.auth().currentUser.displayName;
 
             let btnSignOut = document.getElementById('btn-sign-out')
             btnSignOut.onclick = signOutHandler
 
-            function signOutHandler(){
+            let formChat = document.getElementById('form-chat')
+            formChat.onsubmit = formChatSubmitHandler
+
+            function signOutHandler() {
                 firebase.auth().signOut() // onAuthStateChange => show login
+            }
+
+            function formChatSubmitHandler(e){
+                e.preventDefault()
+                let content = formChat.message.value.trim()
+                if (content) {
+                    let message = {
+                        owner: firebase.auth().currentUser.email,
+                        createdAt: new Date().toISOString(),
+                        content: content
+                    }
+                    
+                    
+                    controller.addMessage(message)
+                }
             }
             break
         }
 
-        case 'loading' : {
+        case 'loading': {
             app.innerHTML = component.loading
             break
         }
@@ -133,6 +152,40 @@ view.validate = function (value, validators, idErrorMessage, errorMessage) {
     } else {
         view.setText(idErrorMessage, errorMessage)
         return false
+    }
+}
+
+view.disable = function(id){
+    document.getElementById(id).setAttribute('disabled', true)
+}
+
+view.enable = function(id){
+    document.getElementById(id).removeAttribute('disabled')
+}
+
+
+view.showCurrentConversation = function () {
+    console.log(model.currentConversation);
+
+    if (model.currentConversation) {
+        // show all message of currentConversation
+        let messages = model.currentConversation.messages
+        let messageContainer = document.getElementById('message-container')
+        for (let message of messages) {
+            let className = "message-chat"
+            let content = message.content
+            if (message.owner == firebase.auth().currentUser.email) {
+                className += " your"
+            }
+            let html = `
+            <div class="${className}">
+            <span>${content}</span>
+            </div>
+            `
+            messageContainer.innerHTML += html
+        }
+
+
     }
 }
 

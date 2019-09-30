@@ -1,13 +1,13 @@
 const controller = {}
 
-controller.initAuth = function(){
+controller.initAuth = function () {
     view.showComponent('loading')
     firebase.auth().onAuthStateChanged(onAuthStateChangedHandler)
 
-    function onAuthStateChangedHandler(user){
+    function onAuthStateChangedHandler(user) {
         if (user && user.emailVerified) {
             view.showComponent('chat')
-        }else{
+        } else {
             view.showComponent('login')
         }
     }
@@ -45,7 +45,7 @@ controller.login = async function (logInInfo) {
 
     try {
         let result = await firebase.auth().signInWithEmailAndPassword(email, password)
-        
+
         // if (result.user && result.user.emailVerified) {
         //     view.showComponent('chat');
         // } else {
@@ -59,4 +59,47 @@ controller.login = async function (logInInfo) {
         view.setText('login-error', error.message)
         button.removeAttribute('disabled')
     }
+}
+
+controller.loadConversations = async function () {
+    //1. get docs from firebase.firestore().collection('conversations')
+    //2. convert docs to conversations
+    //3. save conversations to model
+    //4. view show conversations
+    let result = await firebase
+        .firestore()
+        .collection('conversations')
+        .get()
+    let conversations = []
+    for (let doc of result.docs) {
+        let conversation = doc.data()
+        conversation.id = doc.id
+        conversations.push(conversation)
+
+
+    }
+    
+    
+    model.saveConversations(conversations)
+    if (conversations.length) {
+        model.saveCurrentConversation(conversations[0])
+    }
+    view.showCurrentConversation()
+}
+
+
+controller.addMessage = async function(message){
+    
+    let input = document.getElementById('form-chat-input')
+    view.disable('form-chat-submit-btn')
+
+    await firebase
+    .firestore()
+    .collection('conversations')
+    .doc(model.currentConversation.id)
+    .update({
+        messages: firebase.firestore.FieldValue.arrayUnion(message)
+    })
+    view.enable('form-chat-submit-btn')
+    input.value = ''
 }

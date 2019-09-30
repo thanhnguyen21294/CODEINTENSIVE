@@ -83,22 +83,14 @@ component.register = `
     component.chat = `
     <section class="chat-container">
     <div class="current-conversation">
-      <div class="message-container">
-        <div class="message-chat">
-          <span>Hello</span>
-        </div>
-        <div class="message-chat your">
-          <span>Hello2</span>
-        </div>
-        <div class="message-chat">
-          <span>Hello3</span>
-        </div>
+      <div id='message-container' class="message-container">
+        
       </div>
-      <form class="form-chat">
+      <form id="form-chat" class="form-chat">
         <div class="input-wrapper">
-          <input type="text" name="message" placeholder="Enter your message">
+          <input id="form-chat-input" type="text" name="message" placeholder="Enter your message">
         </div>
-        <button type="submit">Send</button>
+        <button id="form-chat-submit-btn" type="submit">Send</button>
       </form>
     </div>
   </section>
