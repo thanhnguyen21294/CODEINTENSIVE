@@ -123,10 +123,52 @@ button :disabled{
 .chat-container {
     width: 100%;
     height: calc(100vh - 38px);
+    display: flex;
+}
+
+.aside-left{
+    width: 15%;
+    height: 100%;
+    
+}
+
+.list-conversation .conversation{
+    padding: 10px;
+    background: #f2f2f2;
+}
+
+.list-conversation .conversation.current {
+    background: #929292;
+}
+
+.conversation-title{
+    font-weight: 700;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    
+}
+
+.conversation-title:hover {
+    cursor: pointer;
+}
+
+.conversation-member{
+    font-size: 10px;
+    font-weight: 300;
+    font-style: italic;
+}
+
+.add-conversation-form{
+    padding: 10px;
+}
+
+.add-conversation-form>* {
+    margin-bottom: 10px;
 }
 
 .current-conversation {
-    width: 100%;
+    width: 85%;
     height: 100%;
 }
 
@@ -190,3 +232,4 @@ button :disabled{
 .user-profile>* {
     margin-right: 5px;
 }
+

@@ -61,6 +61,8 @@ view.showComponent = function (name) {
             break
         }
 
+        
+
         case `login`: {
             app.innerHTML = component.login
             let link = document.getElementById('login-link');
@@ -91,6 +93,9 @@ view.showComponent = function (name) {
 
             break
         }
+
+
+        
             function allPassed(validateResult) {
                 for (let result of validateResult) {
                     if (!result) {
@@ -114,8 +119,35 @@ view.showComponent = function (name) {
             let formChat = document.getElementById('form-chat')
             formChat.onsubmit = formChatSubmitHandler
 
+            let formAdd = document.getElementById('add-conversation-form')
+            formAdd.onsubmit = formAddSubmitHandler
+
             function signOutHandler() {
                 firebase.auth().signOut() // onAuthStateChange => show login
+            }
+
+            function formAddSubmitHandler(e){
+                e.preventDefault()
+                let title = formAdd.title.value
+                let friendEmail = formAdd.friendEmail.value
+
+                let validateResult = [
+                    view.validate(title, validators.require, 'title-error', 'Invalid title'),
+                    view.validate(friendEmail, validators.email, 'friend-email-error', 'Invalid friend email')
+                ]
+                if (allPassed(validateResult)) {
+                    let conversation = {
+                        title: title,
+                        createdAt: new Date().toISOString(),
+                        message: [],
+                        users: [
+                            friendEmail,
+                            firebase.auth().currentUser.email
+                        ]
+                    }
+                    console.log(conversation);
+                    
+                }
             }
 
             function formChatSubmitHandler(e){
@@ -191,3 +223,34 @@ view.showCurrentConversation = function () {
     }
 }
 
+view.showListConversations = function(){
+    if (model.conversations) {
+        let listConversation = document.getElementById('list-conversation')
+        listConversation.innerHTML=''
+        for (let conversation of model.conversations) {
+            let className = "conversation"
+            if (model.currentConversation && conversation.id == model.currentConversation.id) {
+                className += " current"
+            }
+            let html = `
+            <div class="${className}">
+            <div id="title-${conversation.id}" class="conversation-title">${conversation.title}</div>
+            <div class="conversation-member">${conversation.users.length} members</div>
+            </div>
+            `
+            listConversation.innerHTML += html
+        }
+        //dat su kien click vao conversation-title
+        for (let conversation of model.conversations) {
+            let titleId = `title-${conversation.id}`
+            let titleDiv = document.getElementById(titleId)
+            titleDiv.onclick = onClickTitleHandler
+
+            function onClickTitleHandler(){
+                model.saveCurrentConversation(conversation)
+                view.showCurrentConversation()
+                view.showListConversations()
+            }
+        }
+    }
+}

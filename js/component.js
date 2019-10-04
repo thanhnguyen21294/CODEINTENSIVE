@@ -82,6 +82,23 @@ component.register = `
     `
     component.chat = `
     <section class="chat-container">
+    <div class="aside-left">
+        <div id="list-conversation" class="list-conversation">
+           
+            
+        </div>
+        <form id="add-conversation-form" class="add-conversation-form">
+            <div class="input-wrapper">
+                <input type="text" name="title" placeholder="Conversation-title">
+                <div id="title-error" class="message-error"></div>
+            </div>
+            <div class="input-wrapper">
+            <input type="email" name="friendEmail" placeholder="Your friend mail">
+            <div id="friend-email-error" class="message-error"></div>
+            </div>
+            <button class="btn-icon" type="submit"><i class="fas fa-plus"></i></button>
+        </form>
+    </div>
     <div class="current-conversation">
       <div id='message-container' class="message-container">
         

@@ -86,6 +86,7 @@ controller.loadConversations = async function () {
         model.saveCurrentConversation(conversations[0])
     }
     view.showCurrentConversation()
+    view.showListConversations()
 }
 
 
@@ -117,7 +118,8 @@ controller.setupConversationsOnSnapshot = function () {
         for (let docChange of docChanges) {
             let conversation = docChange.doc.data()
             conversation.id = docChange.doc.id
-            if (docChange.type = 'modified') {
+            if (docChange.type == 'modified') {
+                model.updateConversation(conversation)
                 if (conversation.id == model.currentConversation.id) {
                     model.saveCurrentConversation(conversation)
                     view.showCurrentConversation()
@@ -125,7 +127,7 @@ controller.setupConversationsOnSnapshot = function () {
             }
 
         }
-
+        view.showListConversations()
 
     }
 }
