@@ -131,3 +131,20 @@ controller.setupConversationsOnSnapshot = function () {
 
     }
 }
+
+controller.addConversation = async function(conversation, friendEmail){
+    //1. validate if friend email exist in system
+    //2. add conversation to collection 'conversations'
+    //3. disable error message + disable button submit when processing // TODO
+    try {
+        await firebase
+            .firestore()
+            .collection('conversations')
+            .add(conversation)
+            console.log('added');
+            
+    } catch (error) {
+        console.log(error);
+        
+    }
+}

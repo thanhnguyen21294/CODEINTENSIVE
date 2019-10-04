@@ -145,7 +145,7 @@ view.showComponent = function (name) {
                             firebase.auth().currentUser.email
                         ]
                     }
-                    console.log(conversation);
+                    controller.addConversation(conversation, friendEmail)
                     
                 }
             }
