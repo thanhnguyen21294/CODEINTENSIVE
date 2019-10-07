@@ -68,7 +68,11 @@ component.register = `
 
                 </div>
             </div>
-            <div id="login-error" class="message-error"></div>
+            
+            <div id="log-in-error" class="message-error"></div>
+
+            <div id="log-in-success" class="message-success"></div>
+
             
 
 
@@ -89,14 +93,14 @@ component.register = `
         </div>
         <form id="add-conversation-form" class="add-conversation-form">
             <div class="input-wrapper">
-                <input type="text" name="title" placeholder="Conversation-title">
+                <input id="form-add-input-title" type="text" name="title" placeholder="Conversation-title">
                 <div id="title-error" class="message-error"></div>
             </div>
             <div class="input-wrapper">
-            <input type="email" name="friendEmail" placeholder="Your friend mail">
+            <input id="form-add-input-email" type="email" name="friendEmail" placeholder="Your friend mail">
             <div id="friend-email-error" class="message-error"></div>
             </div>
-            <button class="btn-icon" type="submit"><i class="fas fa-plus"></i></button>
+            <button id="form-add-btn-submit" class="btn-icon" type="submit"><i class="fas fa-plus"></i></button>
         </form>
     </div>
     <div class="current-conversation">

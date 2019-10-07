@@ -22,13 +22,14 @@ controller.register = async function (registerInfo) {
     button.setAttribute('disabled', true)
     view.setText('register-error', '')
     view.setText('register-success', '')
+
     try {
         await firebase.auth().createUserWithEmailAndPassword(email, password)
         await firebase.auth().currentUser.updateProfile({
             displayName: displayName
         })
         await firebase.auth().currentUser.sendEmailVerification()
-        view.setText('register-success', 'An verification email has been sended to your email address!')
+        view.setText('log-in-success', 'An verification email has been sended to your email address!')
     } catch (error) {
         view.setText('register-error', error.message)
     }
@@ -41,7 +42,8 @@ controller.login = async function (logInInfo) {
     let password = logInInfo.password;
     let button = document.getElementById('login-submit-btn')
     button.setAttribute('disabled', true)
-    view.setText('login-error', "")
+    view.setText('log-in-error', "")
+    view.setText('log-in-success', '')
 
     try {
         let result = await firebase.auth().signInWithEmailAndPassword(email, password)
@@ -56,7 +58,7 @@ controller.login = async function (logInInfo) {
         }
 
     } catch (error) {
-        view.setText('login-error', error.message)
+        view.setText('log-in-error', error.message)
         button.removeAttribute('disabled')
     }
 }
@@ -125,6 +127,9 @@ controller.setupConversationsOnSnapshot = function () {
                     view.showCurrentConversation()
                 }
             }
+            if (docChange.type = 'added') {
+                model.updateConversation(conversation)
+            }
 
         }
         view.showListConversations()
@@ -136,15 +141,29 @@ controller.addConversation = async function(conversation, friendEmail){
     //1. validate if friend email exist in system
     //2. add conversation to collection 'conversations'
     //3. disable error message + disable button submit when processing // TODO
+    view.disable("form-add-btn-submit")
     try {
+        let signInMethods = await firebase.auth().fetchSignInMethodsForEmail(friendEmail)
+        console.log(signInMethods);
+        
+        if (!signInMethods.length) {
+            throw new Error('Friend email do not exist in system!')
+        }
+        if (friendEmail == firebase.auth().currentUser.email) {
+            throw new Error('Please enter new email!')
+        }
+
         await firebase
             .firestore()
             .collection('conversations')
             .add(conversation)
-            console.log('added');
+            document.getElementById('form-add-input-title').value = ""
+            document.getElementById('form-add-input-email').value = ""
+
             
     } catch (error) {
-        console.log(error);
+        view.setText("friend-email-error", error.message)
         
     }
+    view.enable('form-add-btn-submit')
 }

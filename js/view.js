@@ -129,7 +129,7 @@ view.showComponent = function (name) {
             function formAddSubmitHandler(e){
                 e.preventDefault()
                 let title = formAdd.title.value
-                let friendEmail = formAdd.friendEmail.value
+                let friendEmail = formAdd.friendEmail.value.trim().toLowerCase()
 
                 let validateResult = [
                     view.validate(title, validators.require, 'title-error', 'Invalid title'),
@@ -139,7 +139,7 @@ view.showComponent = function (name) {
                     let conversation = {
                         title: title,
                         createdAt: new Date().toISOString(),
-                        message: [],
+                        messages: [],
                         users: [
                             friendEmail,
                             firebase.auth().currentUser.email

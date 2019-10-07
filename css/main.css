@@ -132,6 +132,11 @@ button :disabled{
     
 }
 
+.list-conversation{
+    height: 50vh;
+    overflow-y: scroll;
+}
+
 .list-conversation .conversation{
     padding: 10px;
     background: #f2f2f2;
