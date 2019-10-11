@@ -130,6 +130,19 @@ controller.setupConversationsOnSnapshot = function () {
             if (docChange.type = 'added') {
                 model.updateConversation(conversation)
             }
+            console.log('>>', conversation)
+            console.log('>>', docChange)
+            if (docChange.type == 'removed') {
+                model.removeConversation(conversation)
+                if (model.currentConversation && model.currentConversation.id == conversation.id) {
+                    if (model.conversations.length) {
+                        model.saveCurrentConversation(model.conversation[0])
+                    }else{
+                        model.saveCurrentConversation(null)
+                    }
+                    view.showCurrentConversation()
+                }
+            }
 
         }
         view.showListConversations()
@@ -166,4 +179,27 @@ controller.addConversation = async function(conversation, friendEmail){
         
     }
     view.enable('form-add-btn-submit')
+}
+
+controller.leaveConversation = async function() {
+    if (model.currentConversation) {
+        let conversationId = model.currentConversation.id
+        let email = firebase.auth().currentUser.email
+        view.setText('leave-conversation-error','')
+        view.disable('leave-conversation-btn')
+        try {
+            await firebase
+            .firestore()
+            .collection('conversations')
+            .doc(conversationId)
+            .update({
+                users: firebase.firestore.FieldValue.arrayRemove(email)
+            }) 
+        } catch (err) {
+            view.setText('leave-conversation-error', err.message)
+        }
+        
+        view.enable('leave-conversation-btn')
+            
+    }
 }

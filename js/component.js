@@ -47,7 +47,7 @@ component.register = `
     </section>
     `
 
-    component.login = `
+component.login = `
     <section class="login-container">
         <form id="login-container" class="login-form">
             <div class="login-header">
@@ -84,7 +84,7 @@ component.register = `
     </section>
 
     `
-    component.chat = `
+component.chat = `
     <section class="chat-container">
     <div class="aside-left">
         <div id="list-conversation" class="list-conversation">
@@ -114,16 +114,32 @@ component.register = `
         <button id="form-chat-submit-btn" type="submit">Send</button>
       </form>
     </div>
+    <div class="aside-right">
+    <div class="details-current-conversation">
+        <div id="list-users" class="list-users">
+            
+            
+
+        </div>
+        <div id="created-at" class="created-at">
+        </div>
+        <div class="leave-conversation-wrapper">
+        <div id="leave-conversation-error" class="error-message"></div>
+            <button id="leave-conversation-btn">Exit room chat
+            </button>
+        </div>
+    </div>
+    </div>
   </section>
     `
 
-    component.loading = `
+component.loading = `
     <div class = 'loading-container'> 
     <img src="../img/loading.jpg">
     </div>`
 
 
-    component.nav = `
+component.nav = `
     <nav class="main-nav">
     <div class="user-profile">
       <span class="user-display-name" id="user-display-name"></span>
@@ -132,4 +148,3 @@ component.register = `
   </nav>
   `
 
-    

@@ -132,6 +132,11 @@ button :disabled{
     
 }
 
+.aside-right{
+    width: 15%;
+    height: 100%;
+}
+
 .list-conversation{
     height: 50vh;
     overflow-y: scroll;
@@ -238,3 +243,23 @@ button :disabled{
     margin-right: 5px;
 }
 
+.details-current-conversation{
+    padding: 10px;
+    text-align: right;
+}
+
+.details-current-conversation>*{
+    margin-bottom: 10px;
+}
+
+.list-users>*{
+    font-weight: 700;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.created-at{
+    font-size: 10px;
+    font-style: right;
+}

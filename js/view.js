@@ -122,6 +122,9 @@ view.showComponent = function (name) {
             let formAdd = document.getElementById('add-conversation-form')
             formAdd.onsubmit = formAddSubmitHandler
 
+            let leaveConversationBtn = document.getElementById('leave-conversation-btn')
+            leaveConversationBtn.onclick = controller.leaveConversation
+
             function signOutHandler() {
                 firebase.auth().signOut() // onAuthStateChange => show login
             }
@@ -198,12 +201,21 @@ view.enable = function(id){
 
 
 view.showCurrentConversation = function () {
-    console.log(model.currentConversation);
+    
 
     if (model.currentConversation) {
         // show all message of currentConversation
         let messages = model.currentConversation.messages
         let messageContainer = document.getElementById('message-container')
+        // let user1 = model.currentConversation.users[0]
+        // let user2 = model.currentConversation.users[1]
+        
+        
+        
+        
+        // document.getElementById('user1').innerText = user1
+        // document.getElementById('user2').innerText = user2
+
         messageContainer.innerHTML = ""
         for (let message of messages) {
             let className = "message-chat"
@@ -219,7 +231,20 @@ view.showCurrentConversation = function () {
             messageContainer.innerHTML += html
         }
         messageContainer.scrollTop = messageContainer.scrollHeight
-
+        //show details info
+        let users = model.currentConversation.users
+        let createdAt = model.currentConversation.createdAt
+        let createdAtDate = new Date(createdAt)
+        let listUsers = document.getElementById('list-users')
+        let createdAtDom = document.getElementById('created-at')
+        listUsers.innerHTML = ""
+        for (let email of users) {
+            let html = `
+            <div>${email}</div>
+            `
+            listUsers.innerHTML += html
+        }
+        createdAtDom.innerText = createdAtDate.toLocaleString()
     }
 }
 

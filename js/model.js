@@ -23,3 +23,12 @@ model.updateConversation = function(conversation){
         model.conversations.push(conversation)
     }
 }
+
+model.removeConversation = function(conversation){
+    let existedIndex = model.conversations.findIndex(function(ele){
+        return ele.id == conversation.id
+    })
+    if (existedIndex >= 0) {
+        model.conversations.splice(existedIndex, 1)
+    }
+}
